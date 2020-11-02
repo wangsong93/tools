@@ -39,21 +39,27 @@ var importToGroup = []func(localPrefix, importPath string) (num int, ok bool){
 		}
 		for _, p := range strings.Split(localPrefix, ",") {
 			if strings.HasPrefix(importPath, p) || strings.TrimSuffix(p, "/") == importPath {
-				return 3, true
+				return 1, true
 			}
 		}
 		return
 	},
 	func(_, importPath string) (num int, ok bool) {
-		if strings.HasPrefix(importPath, "appengine") {
+		if strings.HasPrefix(importPath, "maigo/mmsdk") || strings.HasPrefix(importPath, "maigo/service") {
 			return 2, true
+		}
+		return
+	},
+	func(_, importPath string) (num int, ok bool) {
+		if strings.HasPrefix(importPath, "maigo") {
+			return 3, true
 		}
 		return
 	},
 	func(_, importPath string) (num int, ok bool) {
 		firstComponent := strings.Split(importPath, "/")[0]
 		if strings.Contains(firstComponent, ".") {
-			return 1, true
+			return 4, true
 		}
 		return
 	},
